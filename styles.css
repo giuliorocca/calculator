@@ -57,12 +57,12 @@ p {
     align-items: center;
 }
 
-.buttonOperator {
+.operator {
     color: white;
     background-color: #ffa500;
 }
 
-.buttonNonOperator {
+.number {
     color: white;
     background-color: #313131;
 }

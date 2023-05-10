@@ -1,6 +1,7 @@
 let num1;
 let num2;
 let operator;
+let lastModifiedDisplayLine;
 const sound = new Audio('click.mp3');
 
 // Define basic math operations
@@ -56,11 +57,13 @@ function updateDisplay(event) {
     }
 
     // Delete last thing entered when C button clicked based on last active html element
+    
+    
     if (event.target.id === "c") {
-        if (firstLine.classList.contains("active") && firstLine.textContent.length > 0) {
+        if (lastModifiedElement === 'firstLine' && firstLine.textContent.length > 0) {
             firstLine.textContent = firstLine.textContent.slice(0, -1);
         }
-        if (secondLine.classList.contains("active") && secondLine.textContent.length > 0) {
+        if (lastModifiedElement === 'secondLine' && secondLine.textContent.length > 0) {
             secondLine.textContent = secondLine.textContent.slice(0, -1);
         }
     }
@@ -85,7 +88,7 @@ function updateDisplay(event) {
         }
 
         firstLine.textContent = firstLine.textContent + buttonText;
-        firstLine.style.fontSize = "30px";
+        firstLine.style.fontSize = "32px";
         operator = buttonText.trim();
         num1 = parseFloat(firstLine.textContent.slice(0, -1));
     }
@@ -95,7 +98,7 @@ function updateDisplay(event) {
         num2 = parseFloat(secondLine.textContent);
         let output = operate(num1, num2, operator);
         firstLine.textContent = output;
-        firstLine.style.fontSize = "46px";
+        firstLine.style.fontSize = "50px";
         secondLine.textContent = "";
         operator = undefined;
     }
@@ -106,3 +109,12 @@ const buttons = document.getElementsByClassName("button");
 for (i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", updateDisplay);
 }
+
+// Attach input event listeners to the two lines of the calculator's display
+// to know which line was last edited (needed for 'clear' button functionality)
+firstLine.addEventListener("input", function() {
+    lastModifiedDisplayLine = firstLine;
+});
+secondLine.addEventListener("input", function() {
+    lastModifiedDisplayLine = secondLine;
+});

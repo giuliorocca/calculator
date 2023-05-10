@@ -16,23 +16,29 @@ function multiply (num1, num2) {
 function divide (num1, num2) {
     return num1 / num2;
 }
+function percent (num1) {
+    return num1 / 100;
+}
 
-// Define how calculator accepts operator inputs
+// Define how calculator evaluates operator inputs
 function operate (num1, num2, operator) {
     if (operator == "+") {
         return add(num1, num2);
     }
     if (operator == "-") {
-    return subtract(num1, num2);
+        return subtract(num1, num2);
     }
-    if (operator == "/") {
-    return divide(num1, num2);
+    if (operator == "x") {
+        return multiply(num1, num2);
+    }
+    if (operator == "÷") {
+        return divide(num1, num2);
     }
 }
 
-// Define how calculator display updates (on two lines)
+// Define how the calculator's display updates (on two lines)
 function updateDisplay(event) {
-    sound.play;
+    sound.play();
     let buttonText = event.target.textContent;
     let firstLine = document.getElementById("firstline");
     let secondLine = document.getElementById("secondline");
@@ -46,7 +52,7 @@ function updateDisplay(event) {
     // Show numbers/decimals in display when numbers/decimals buttons clicked
     // in first line or on second line display if first number already input
     if (event.target.classList.contains("number")) {
-        if (operator === "") {
+        if (typeof operator === 'undefined') {
             firstLine.textContent = firstLine.textContent + buttonText;
         }
         else {
@@ -59,20 +65,18 @@ function updateDisplay(event) {
     if (event.target.classList.contains("operator")) {
         firstLine.textContent = firstLine.textContent + buttonText;
         firstLine.style.fontSize = "24px";
-        operator = buttonText;
-        num1 = parseFloat(firstLine.textContent);
-        console.log(num1);
+        operator = buttonText.trim();
+        num1 = parseFloat(firstLine.textContent.slice(0, -1));
     }
     
     // Evaluate the two inputted numbers when equals button clicked
     if (event.target.id === "equals") {
         num2 = parseFloat(secondLine.textContent);
-        console.log(num2);
         let output = operate(num1, num2, operator);
-        console.log(output);
         firstLine.textContent = output;
         firstLine.style.fontSize = "30px";
         secondLine.textContent = "";
+        operator = undefined;
     }
 }
 

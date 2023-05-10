@@ -42,6 +42,11 @@ p {
     border-radius: 50%;
 }
 
+#equals {
+    color: white;
+    background-color: #ffa500;
+}
+
 #display {
     display: flex;
     flex-direction: column;

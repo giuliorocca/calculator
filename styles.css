@@ -30,6 +30,11 @@ p {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
+    padding: 50px;
+    align-items: center;
+    background-color: black;
+    border-radius: 10%;
+    width: 380px;
 }
 
 #zero {
@@ -38,11 +43,17 @@ p {
 }
 
 #display {
-    background-color: bisque;
-    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
     text-align: right;
+    background-color: black;
+    color: white;
+    width: 300px;
+    height: 100px;
     padding: 10px;
     margin-bottom: 10px;
+    padding-right: 20px;
 }
 
 #row1, #row2, #row3, #row4, #row5 {
@@ -75,15 +86,6 @@ p {
 .buttonGrey {
     color: black;
     background-color: #9f9f9f;
-}
-
-#display {
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: right;
-    align-items: right;
-    padding-right: 20px;
 }
 
 #footer {

@@ -55,12 +55,15 @@ function updateDisplay(event) {
         num2 = undefined;
     }
 
-    // Delete last thing entered when C button clicked
+    // Delete last thing entered when C button clicked based on last active html element
     if (event.target.id === "c") {
-        firstLine.textContent = firstLine.textContent.slice(0, -1);
-        secondLine.textContent = secondLine.textContent.slice(0, -1);
+        if (firstLine.classList.contains("active") && firstLine.textContent.length > 0) {
+            firstLine.textContent = firstLine.textContent.slice(0, -1);
+        }
+        if (secondLine.classList.contains("active") && secondLine.textContent.length > 0) {
+            secondLine.textContent = secondLine.textContent.slice(0, -1);
+        }
     }
-
 
     // Show numbers/decimals in display when numbers/decimals buttons clicked
     // in first line or on second line display if first number already input

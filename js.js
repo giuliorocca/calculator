@@ -46,7 +46,7 @@ function updateDisplay(event) {
     // Show numbers/decimals in display when numbers/decimals buttons clicked
     // in first line or on second line display if first number already input
     if (event.target.classList.contains("number")) {
-        if (firstLine.textContent === "") {
+        if (operator === "") {
             firstLine.textContent = firstLine.textContent + buttonText;
         }
         else {

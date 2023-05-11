@@ -119,7 +119,7 @@ function updateDisplay(event) {
         if (output % 1 != 0) {
             output = output.toFixed(2);
         }
-        console.log(output.toString().length);
+
         // Convert answer to exponent notation and six decimals
         if (output.toString().length > 8) {
             output = output.toExponential(6);

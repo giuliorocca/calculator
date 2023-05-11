@@ -79,15 +79,13 @@ function updateDisplay(event) {
     // and an operator has been already input
     if (event.target.classList.contains("number")) {
         if (typeof operator === 'undefined') {
-            console.log(typeof operator);
             if (firstLine.textContent.length <= maxLengthDisplayLine) {
                 firstLine.textContent = firstLine.textContent + buttonText;
                 lastModifiedDisplayLine = "firstLine";
+
             }
         }
         else {
-            console.log(secondLine.textContent.length);
-            console.log(maxLengthDisplayLine);
             if (secondLine.textContent.length <= maxLengthDisplayLine) {
                 secondLine.textContent = secondLine.textContent + buttonText;
                 lastModifiedDisplayLine = "secondLine";
@@ -120,6 +118,7 @@ function updateDisplay(event) {
         firstLine.style.fontSize = "50px";
         secondLine.textContent = "";
         operator = undefined;
+        lastModifiedDisplayLine = "firstLine";
     }
 }
 

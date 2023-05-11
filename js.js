@@ -2,6 +2,7 @@ let num1;
 let num2;
 let operator;
 let lastModifiedDisplayLine;
+const maxLengthDisplayLine = 10;
 const sound = new Audio('click.mp3');
 
 // Define basic math operations
@@ -21,7 +22,8 @@ function percent (num1, num2) {
     return ((num1 / 100) * num2);
 }
 
-// Define how calculator evaluates operator inputs
+// Define how calculator applies the operator 
+// to the two numbers inputted
 function operate (num1, num2, operator) {
     if (operator == "+") {
         return add(num1, num2);
@@ -40,13 +42,14 @@ function operate (num1, num2, operator) {
     }
 }
 
-// Define how the calculator's display updates (on two lines)
+// Define how the calculator display updates 
+// across two lines
 function updateDisplay(event) {
     sound.play();
     let buttonText = event.target.textContent;
     let firstLine = document.getElementById("firstline");
     let secondLine = document.getElementById("secondline");
-
+    
     // Clear display and memory when AC button clicked
     if (event.target.id === "ac") {
         firstLine.textContent = "";
@@ -56,28 +59,42 @@ function updateDisplay(event) {
         num2 = undefined;
     }
 
-    // Delete last thing entered when C button clicked based on last active html element
-    
-    
+    // Delete last char entered when C button clicked
+    // on last modified display line
     if (event.target.id === "c") {
-        if (lastModifiedElement === 'firstLine' && firstLine.textContent.length > 0) {
-            firstLine.textContent = firstLine.textContent.slice(0, -1);
+        if (lastModifiedDisplayLine === "firstLine") {
+            let text = firstLine.textContent;
+            text = text.slice(0, -1);
+            firstLine.textContent = text;
         }
-        if (lastModifiedElement === 'secondLine' && secondLine.textContent.length > 0) {
-            secondLine.textContent = secondLine.textContent.slice(0, -1);
+        if (lastModifiedDisplayLine === "secondLine") {
+            let text = secondLine.textContent;
+            text = text.slice(0, -1);
+            secondLine.textContent = text;
         }
     }
 
     // Show numbers/decimals in display when numbers/decimals buttons clicked
     // in first line or on second line display if first number already input
+    // and an operator has been already input
     if (event.target.classList.contains("number")) {
         if (typeof operator === 'undefined') {
-            firstLine.textContent = firstLine.textContent + buttonText;
+            console.log(typeof operator);
+            if (firstLine.textContent.length <= maxLengthDisplayLine) {
+                firstLine.textContent = firstLine.textContent + buttonText;
+                lastModifiedDisplayLine = "firstLine";
+            }
         }
         else {
-            secondLine.textContent = secondLine.textContent + buttonText;
+            console.log(secondLine.textContent.length);
+            console.log(maxLengthDisplayLine);
+            if (secondLine.textContent.length <= maxLengthDisplayLine) {
+                secondLine.textContent = secondLine.textContent + buttonText;
+                lastModifiedDisplayLine = "secondLine";
+            }
         }
     }
+
 
     // Reduce font of first number when followed by an operator button
     // and save the first number and operator as variables
@@ -86,13 +103,15 @@ function updateDisplay(event) {
         if (firstLine.textContent.includes("x", "+", "-", "÷", "%")) {
             return;
         }
-
-        firstLine.textContent = firstLine.textContent + buttonText;
-        firstLine.style.fontSize = "32px";
-        operator = buttonText.trim();
-        num1 = parseFloat(firstLine.textContent.slice(0, -1));
+        if (secondLine.textContent.length <= maxLengthDisplayLine) {
+            firstLine.textContent = firstLine.textContent + buttonText;
+            firstLine.style.fontSize = "32px";
+            num1 = parseFloat(firstLine.textContent.slice(0, -1));
+            operator = buttonText;
+            lastModifiedDisplayLine = "firstLine";
+        }
     }
-    
+
     // Evaluate the two inputted numbers when equals button clicked
     if (event.target.id === "equals") {
         num2 = parseFloat(secondLine.textContent);
@@ -109,12 +128,3 @@ const buttons = document.getElementsByClassName("button");
 for (i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", updateDisplay);
 }
-
-// Attach input event listeners to the two lines of the calculator's display
-// to know which line was last edited (needed for 'clear' button functionality)
-firstLine.addEventListener("input", function() {
-    lastModifiedDisplayLine = firstLine;
-});
-secondLine.addEventListener("input", function() {
-    lastModifiedDisplayLine = secondLine;
-});

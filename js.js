@@ -77,12 +77,12 @@ function updateDisplay(event) {
     // Show numbers/decimals in display when numbers/decimals buttons clicked
     // in first line or on second line display if first number already input
     // and an operator has been already input
+    
     if (event.target.classList.contains("number")) {
         if (typeof operator === 'undefined') {
             if (firstLine.textContent.length <= maxLengthDisplayLine) {
                 firstLine.textContent = firstLine.textContent + buttonText;
                 lastModifiedDisplayLine = "firstLine";
-
             }
         }
         else {
@@ -114,6 +114,17 @@ function updateDisplay(event) {
     if (event.target.id === "equals") {
         num2 = parseFloat(secondLine.textContent);
         let output = operate(num1, num2, operator);
+        
+        // Round answer to two decimals if answer isn't whole number
+        if (output % 1 != 0) {
+            output = output.toFixed(2);
+        }
+        console.log(output.toString().length);
+        // Convert answer to exponent notation and six decimals
+        if (output.toString().length > 8) {
+            output = output.toExponential(6);
+        }
+
         firstLine.textContent = output;
         firstLine.style.fontSize = "50px";
         secondLine.textContent = "";

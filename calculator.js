@@ -74,13 +74,13 @@ function updateDisplay(event) {
         }
     }
     
-    // Prevent user from inputting two consecutive decimals
+    // Prevent user from inputting two decimals for num1 or num2
     if (event.target.classList.contains("number") && event.target.id === "dot") {
-        const decimal = ["."];
-        if (decimal.includes(firstLine.textContent.slice(-1))) {
+        const decimal = ".";
+        if (lastModifiedDisplayLine === "firstLine" && firstLine.textContent.includes(decimal)) {
             return;
         }
-        if (decimal.includes(secondLine.textContent.slice(-1))) {
+        if (lastModifiedDisplayLine === "secondLine" && secondLine.textContent.includes(decimal)) {
             return;
         }
     }
@@ -107,7 +107,7 @@ function updateDisplay(event) {
     // Reduce font of first number when followed by an operator button
     // and save the first number and operator as variables
     if (event.target.classList.contains("operator")) {
-        // Do not allow user to input two operators consecutively
+        // Prevent user from inputting two operators consecutively
         const operators = ["x", "+", "-", "÷", "%"];
         if (operators.includes(firstLine.textContent.slice(-1))) {
             return;

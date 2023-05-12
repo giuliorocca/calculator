@@ -98,7 +98,8 @@ function updateDisplay(event) {
     // and save the first number and operator as variables
     if (event.target.classList.contains("operator")) {
         // Do not allow user to input two operators consecutively
-        if (firstLine.textContent.includes("x", "+", "-", "÷", "%")) {
+        const operators = ["x", "+", "-", "÷", "%"];
+        if (operators.includes(firstLine.textContent.slice(-1))) {
             return;
         }
         if (secondLine.textContent.length <= maxLengthDisplayLine) {

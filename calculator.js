@@ -73,11 +73,22 @@ function updateDisplay(event) {
             secondLine.textContent = text;
         }
     }
-
+    
+    // Prevent user from inputting two consecutive decimals
+    if (event.target.classList.contains("number") && event.target.id === "dot") {
+        const decimal = ["."];
+        if (decimal.includes(firstLine.textContent.slice(-1))) {
+            return;
+        }
+        if (decimal.includes(secondLine.textContent.slice(-1))) {
+            return;
+        }
+    }
+    
     // Show numbers/decimals in display when numbers/decimals buttons clicked
     // in first line or on second line display if first number already input
     // and an operator has been already input
-    
+
     if (event.target.classList.contains("number")) {
         if (typeof operator === 'undefined') {
             if (firstLine.textContent.length <= maxLengthDisplayLine) {
@@ -92,7 +103,6 @@ function updateDisplay(event) {
             }
         }
     }
-
 
     // Reduce font of first number when followed by an operator button
     // and save the first number and operator as variables
